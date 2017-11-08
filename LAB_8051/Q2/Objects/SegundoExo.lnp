@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\SegundoExo.obj" 
+TO ".\Objects\SegundoExo" 
+PRINT(".\Listings\SegundoExo.m51") RAMSIZE(256) 

@@ -1,0 +1,74 @@
+C51 COMPILER V9.56.0.0   SEGUNDOEXO                                                        11/08/2017 17:37:23 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SEGUNDOEXO
+OBJECT MODULE PLACED IN .\Objects\SegundoExo.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE SegundoExo.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\SegundoExo.lst) TABS(2) OBJECT(.\Objects\SegundoExo.obj)
+
+line level    source
+
+   1          #include<at89x52.h>
+   2          #define esteira_caixa P0_0
+   3          #define esteira_produto P0_1
+   4           
+   5          int cont0, cont1, quantidade = 0;
+   6          void nova_caixa(void) interrupt 3{
+   7   1      //TR0 = 0;
+   8   1      TR1 = 0; 
+   9   1      TH1 = 0x3C;
+  10   1      TL1 = 0xAF; 
+  11   1      TR1 = 1; 
+  12   1      cont1++;
+  13   1        if(cont1 == 40){
+  14   2          esteira_produto = 0;
+  15   2          esteira_caixa = 1;
+  16   2        //  quantidade = 0;
+  17   2          cont1 = 0;
+  18   2        }
+  19   1      }
+  20          
+  21          void produto_caixa(void) interrupt 1{
+  22   1      TR0 = 0; 
+  23   1      TH0 = 0x3C;
+  24   1      TL0 = 0xAF; 
+  25   1      TR0 = 1; 
+  26   1        cont0++;
+  27   1        if(cont0==120){ 
+  28   2          esteira_produto = 1;
+  29   2          esteira_caixa = 0;
+  30   2          quantidade++;
+  31   2          cont0=0;
+  32   2        }
+  33   1      }
+  34          main(){
+  35   1        P0 = 0;
+  36   1        EA = 1; 
+  37   1        ET0 = 1; 
+  38   1        ET1 = 1; 
+  39   1        TMOD = 1;
+  40   1        TR0 = 1;
+  41   1      
+  42   1        while(1){
+  43   2          if(quantidade==10){
+  44   3          TR1 = 1;
+  45   3          quantidade = 0;
+  46   3        }
+  47   2      }
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    114    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.56.0.0   SEGUNDOEXO                                                        11/08/2017 17:37:23 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
